@@ -1,10 +1,8 @@
 from modules.network import network
 from modules.permissions import permissions
 from modules.update import update
-from modules.ssh import run_ssh_audit
+from modules.ssh import liste_resultats
 
-
-resultats_ssh = run_ssh_audit()
 
 html = f"""
 <html>
