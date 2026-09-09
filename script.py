@@ -2,6 +2,7 @@ from modules.network import network
 from modules.permissions import permissions
 from modules.ssh import run_ssh_audit
 
+resultats_ssh = run_ssh_audit()
 
 html = f"""
 <html>
