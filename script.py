@@ -40,9 +40,6 @@ html = f"""
 <p><b>Fichiers world-writable :</b></p>
 <pre>{permissions["world_writable"]}</pre>
 
-<p><b>Fichiers SUID :</b></p>
-<pre>{permissions["suid"]}</pre>
-
 <h2>SSH</h2>
 
 <h2>Updates</h2>
