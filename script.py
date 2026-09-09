@@ -42,6 +42,15 @@ html = f"""
 
 <h2>SSH</h2>
 
+<p><b>Vérification 1 : le fichier de configuration existe-t-il et est-il lisible ?:</b> {liste_resultats[1]}</p>
+
+<p><b>Vérification 2 : PermitRootLogin :</b> {liste_resultats[2]}</p> 
+
+<p><b>Vérification 3 : permissions et propriétaire du fichier de configuration :</b> {liste_resultats[3]}</p> 
+
+<p><b>Vérification 4 : quels utilisateurs/groupes sont explicitement autorisés ? :</b> {liste_resultats[4]}</p> 
+
+
 <h2>Updates</h2>
 
 <p><b>Mises à jour de sécurité en attente :</b> {update["nb_maj_securite"]}</p>
