@@ -1,5 +1,6 @@
 from modules.network import network
 from modules.permissions import permissions
+from modules.update import update
 
 
 html = f"""
@@ -42,6 +43,24 @@ html = f"""
 <h2>SSH</h2>
 
 <h2>Updates</h2>
+
+<p><b>Mises à jour de sécurité en attente :</b> {update["nb_maj_securite"]}</p>
+<pre>{update["maj_securite"]}</pre>
+
+<p><b>Mises à jour totales en attente :</b> {update["nb_maj_totales"]}</p> 
+
+<p><b>Version du système :</b> {update["codename"]}</p> 
+
+<p><b>Date de fin de vie :</b> {update["date_fin_de_vie"]}</p> 
+
+<p><b>Système obsolète :</b> {update["systeme_obsolete"]}</p> 
+
+<p><b>Mises à jour automatiques :</b> {update["auto_maj"]}</p> 
+
+<p><b>Âge du cache apt (jours) :</b> {update["age_cache_jours"]}</p> 
+
+<p><b>Nombre de paquets en échec d'installation :</b> {update["nb_echecs_installation"]}</p> 
+<pre>{update["echecs_installation"]}</pre>
 
 </body>
 </html>
