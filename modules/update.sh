@@ -1,25 +1,15 @@
-#!/usr/bin/env bash
-# update.sh — Version Bash de update.py
-# Même logique, mêmes commandes shell que la version Python : seule la
-# syntaxe change (variables bash au lieu de subprocess.getoutput).
+#!/bin/bash
+# update.sh — Partie MAJ, au format tableau associatif (comme network.sh
+# et permissions.sh), pour être utilisable avec "source" depuis script.sh.
 
 # --- 1. Mises à jour de sécurité en attente (proxy pour CVE/KEV) -----------
-# Un paquet listé dans un dépôt "*-security" est un correctif déjà publié
-# pour une faille connue : c'est l'équivalent local le plus fiable d'un
-# "KEV" sans avoir besoin d'interroger une base CVE externe.
 maj_securite=$(apt list --upgradable 2>/dev/null | grep -i security | cut -d/ -f1)
 nb_maj_securite=$(apt list --upgradable 2>/dev/null | grep -ci security)
-
-# Nombre total de mises à jour en attente (sécurité + autres)
 nb_maj_totales=$(apt list --upgradable 2>/dev/null | grep -c '^[a-z]')
 
 # --- 2. Fin de vie du système (EOL) -----------------------------------------
-# VERSION_CODENAME est présent dans /etc/os-release sur Debian ET Ubuntu
-# (contrairement à UBUNTU_CODENAME, qui n'existe que sur Ubuntu).
 codename=$(. /etc/os-release && echo $VERSION_CODENAME)
 
-# En Bash, un "dictionnaire" s'appelle un tableau associatif : on le
-# déclare avec "declare -A", puis on accède à une valeur avec ${tableau[clé]}.
 declare -A dates_fin_de_vie=(
     [focal]="2025-05-29"       # Ubuntu 20.04
     [jammy]="2027-04-21"       # Ubuntu 22.04
@@ -33,9 +23,6 @@ declare -A dates_fin_de_vie=(
 if [ -n "${dates_fin_de_vie[$codename]}" ]; then
     date_fin_de_vie="${dates_fin_de_vie[$codename]}"
     aujourdhui=$(date +%Y-%m-%d)
-    # Les dates au format YYYY-MM-DD se comparent correctement comme du
-    # texte simple : "2026-01-01" > "2025-12-31" est vrai lettre par
-    # lettre, donc pas besoin de convertir en timestamp ici.
     if [[ "$aujourdhui" > "$date_fin_de_vie" ]]; then
         systeme_obsolete="True"
     else
@@ -58,21 +45,33 @@ else
 fi
 
 # --- 5. Échecs d'installation ------------------------------------------------
-# dpkg --audit (alias -C) est l'outil officiel pour lister les paquets
-# dans un état incohérent. Vide si tout va bien.
 echecs_installation=$(dpkg --audit)
 nb_echecs_installation=$(dpkg --audit | grep -c '.')
 
-# --- 6. Affichage regroupé ----------------------------------------------------
-# On affiche chaque information sur une ligne "clé: valeur", pour rester
-# lisible et comparable avec le dictionnaire produit par update.py.
-echo "maj_securite: $maj_securite"
-echo "nb_maj_securite: $nb_maj_securite"
-echo "nb_maj_totales: $nb_maj_totales"
-echo "codename: $codename"
-echo "date_fin_de_vie: $date_fin_de_vie"
-echo "systeme_obsolete: $systeme_obsolete"
-echo "auto_maj: $auto_maj"
-echo "age_cache_jours: $age_cache_jours"
-echo "echecs_installation: $echecs_installation"
-echo "nb_echecs_installation: $nb_echecs_installation"
+# --- 6. Regroupement dans un tableau associatif "update" --------------------
+# Même principe que network.sh/permissions.sh : script.sh fera
+# "source modules/update.sh" puis lira ${update["cle"]} dans son heredoc.
+declare -A update=(
+    [maj_securite]="$maj_securite"
+    [nb_maj_securite]="$nb_maj_securite"
+    [nb_maj_totales]="$nb_maj_totales"
+    [codename]="$codename"
+    [date_fin_de_vie]="$date_fin_de_vie"
+    [systeme_obsolete]="$systeme_obsolete"
+    [auto_maj]="$auto_maj"
+    [age_cache_jours]="$age_cache_jours"
+    [echecs_installation]="$echecs_installation"
+    [nb_echecs_installation]="$nb_echecs_installation"
+)
+
+# --- 7. Affichage (comme network.sh/permissions.sh, pour le débogage) ------
+echo "maj_securite: ${update[maj_securite]}"
+echo "nb_maj_securite: ${update[nb_maj_securite]}"
+echo "nb_maj_totales: ${update[nb_maj_totales]}"
+echo "codename: ${update[codename]}"
+echo "date_fin_de_vie: ${update[date_fin_de_vie]}"
+echo "systeme_obsolete: ${update[systeme_obsolete]}"
+echo "auto_maj: ${update[auto_maj]}"
+echo "age_cache_jours: ${update[age_cache_jours]}"
+echo "echecs_installation: ${update[echecs_installation]}"
+echo "nb_echecs_installation: ${update[nb_echecs_installation]}"
