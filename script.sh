@@ -58,6 +58,7 @@ cat > report.html <<EOF
 
 <p><b>Nombre de paquets en échec d'installation :</b> ${update["nb_echecs_installation"]}</p>
 <pre>${update["echecs_installation"]}</pre>
+
 <h2>SSH</h2>
 
 <p><b>Vérification 1 : fichier de configuration trouvé et lisible :</b> ${resultats_ssh[0]}</p>
