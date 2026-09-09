@@ -1,0 +1,74 @@
+
+<html>
+<head>
+    <title>Rapport d'audit</title>
+</head>
+
+<body>
+
+<h1>Rapport d'audit de sécurité</h1>
+
+<h2>Réseau</h2>
+
+<p><b>Interfaces :</b></p>
+<pre>ens33 192.168.235.151/24</pre>
+
+<p><b>Ports :</b></p>
+<pre>udp 0.0.0.0:35177
+udp 0.0.0.0:5353
+udp [::]:36626
+udp [::]:5353
+tcp 0.0.0.0:22
+tcp 127.0.0.1:631
+tcp [::]:22
+tcp [::1]:631</pre>
+
+<p><b>IP Forwarding :</b> 0</p>
+
+<p><b>Firewall :</b> nftables disponible</p>
+
+
+<h2>Permissions</h2>
+
+<p><b>/etc/passwd :</b> 644 root:root</p>
+
+<p><b>/etc/shadow :</b> 640 root:shadow</p>
+
+<p><b>/etc/group :</b> 644 root:root</p>
+
+<p><b>Fichiers world-writable :</b></p>
+<pre></pre>
+
+<h2>SSH</h2>
+
+<p><b>Vérification 1 : le fichier de configuration existe-t-il et est-il lisible ?:</b> [INFO] PermitRootLogin non défini dans le fichier (valeur par défaut OpenSSH : prohibit-password)</p>
+
+<p><b>Vérification 2 : PermitRootLogin :</b> [INFO] Permissions de /etc/ssh/sshd_config : -rw-r--r--</p> 
+
+<p><b>Vérification 3 : permissions et propriétaire du fichier de configuration :</b> [OK] Seul le propriétaire peut modifier le fichier</p> 
+
+<p><b>Vérification 4 : quels utilisateurs/groupes sont explicitement autorisés ? :</b> [INFO] Aucune restriction AllowUsers/AllowGroups définie (tous les utilisateurs sont autorisés par défaut)</p> 
+
+
+<h2>Updates</h2>
+
+<p><b>Mises à jour de sécurité en attente :</b> 1</p>
+<pre>linux-image-amd64</pre>
+
+<p><b>Mises à jour totales en attente :</b> 1</p> 
+
+<p><b>Version du système :</b> bookworm</p> 
+
+<p><b>Date de fin de vie :</b> 2026-06-10</p> 
+
+<p><b>Système obsolète :</b> True</p> 
+
+<p><b>Mises à jour automatiques :</b> Fichier absent : mises a jour automatiques non configurees</p> 
+
+<p><b>Âge du cache apt (jours) :</b> Inconnu</p> 
+
+<p><b>Nombre de paquets en échec d'installation :</b> 0</p> 
+<pre></pre>
+
+</body>
+</html>
