@@ -3,6 +3,8 @@
 source modules/network.sh
 source modules/permissions.sh
 source modules/update.sh
+source modules/ssh.sh
+
 
 
 cat > report.html <<EOF
@@ -56,6 +58,13 @@ cat > report.html <<EOF
 
 <p><b>Nombre de paquets en échec d'installation :</b> ${update["nb_echecs_installation"]}</p>
 <pre>${update["echecs_installation"]}</pre>
+<h2>SSH</h2>
+
+<p><b>Vérification 1 : fichier de configuration trouvé et lisible :</b> ${resultats_ssh[0]}</p>
+<p><b>Vérification 2 : PermitRootLogin :</b> ${resultats_ssh[1]}</p>
+<p><b>Vérification 3 : permissions du fichier de configuration :</b> ${resultats_ssh[2]}</p>
+<p><b>Vérification 4 : utilisateurs/groupes autorisés (AllowUsers/AllowGroups) :</b> ${resultats_ssh[3]}</p>
+
 
 </body>
 </html>
