@@ -10,6 +10,7 @@ html = f"""
 <html>
 <head>
     <title>Rapport d'audit</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
